@@ -1,0 +1,114 @@
+name:                autotransl
+version:             0.1.0.0
+github:              "githubuser/autotransl"
+license:             BSD-3-Clause
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2025 Author name here"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/autotransl#readme>
+
+dependencies:
+- base >= 4.10 && < 5
+- calamity
+- data-default
+- data-flags
+- di
+- di-polysemy
+- optics
+- polysemy
+- polysemy-plugin
+- text
+- text-show
+- optics
+- optics-core
+- wreq
+- aeson
+- lens
+- di-polysemy
+- unordered-containers
+- hasql
+- profunctors
+- vector
+- iso639
+- containers
+- stm
+- aeson-optics
+- random
+- regex-base
+- regex-tdfa
+- mtl
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+- -fplugin=Polysemy.Plugin
+
+default-extensions:
+  - DataKinds
+  - OverloadedLabels
+  - OverloadedStrings
+  - TypeApplications
+  - DeriveGeneric
+  - FlexibleContexts
+  - GADTs
+  - LambdaCase
+  - PolyKinds
+  - RankNTypes
+  - ScopedTypeVariables
+  - TemplateHaskell
+  - TypeOperators
+  - TypeFamilies
+  - ImportQualifiedPost
+  - ViewPatterns
+  - NamedFieldPuns
+  - DeriveFunctor
+  - DisambiguateRecordFields
+  - FlexibleInstances
+  - MultiParamTypeClasses
+  - UndecidableInstances
+  - DuplicateRecordFields
+
+library:
+  source-dirs: src
+  
+
+executables:
+  autotransl-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - autotransl
+
+tests:
+  autotransl-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - autotransl

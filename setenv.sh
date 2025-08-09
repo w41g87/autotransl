@@ -1,0 +1,1 @@
+export $(cat <(cat ../.env) <(echo) <(cat ../db/.env) | xargs)
