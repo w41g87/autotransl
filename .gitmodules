@@ -1,3 +1,3 @@
 [submodule "calamity"]
 	path = calamity
-	url = ./calamity
+	url = https://github.com/w41g87/calamity.git
