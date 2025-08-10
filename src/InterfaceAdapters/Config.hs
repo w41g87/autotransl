@@ -20,9 +20,9 @@ makeLenses ''Config
 envConfig :: Member (Embed IO) r
             => Sem r Config
 envConfig = do
-    let host = "localhost"
-    let port = 5432
+    host <- embed $ getEnv "POSTGRES_HOST"
+    port <- embed $ getEnv "POSTGRES_PORT"
     db <- embed $ getEnv "POSTGRES_DB"
     user <- embed $ getEnv "POSTGRES_USER"
     pass <- embed $ getEnv "POSTGRES_PASSWORD"
-    return $ Config host port (pack db) (pack user) (pack pass)
+    return $ Config (pack host) (read port) (pack db) (pack user) (pack pass)
