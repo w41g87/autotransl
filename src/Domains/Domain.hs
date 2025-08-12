@@ -69,7 +69,7 @@ isTarget tgt (DetectResponse ls) = Prelude.any (\d -> toLower (language d) == to
 
 toPara :: Text -> TransResponse -> Maybe Text
 toPara lang (TransResponse ls) = Prelude.foldr (\a b ->
-    if detected_source_language a == lang
+    if toLower (detected_source_language a) == toLower lang
         then b
         else Just (translated_text a) <> b
         ) Nothing ls

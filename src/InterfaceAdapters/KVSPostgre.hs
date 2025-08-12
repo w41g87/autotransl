@@ -125,7 +125,7 @@ runKvsPostgre = interpret $ \case
                 Just v ->
                     tryParseJSON v
                 Nothing -> do
-                    DP.info $ "Empty row for id " ++ show k 
+                    DP.info $ "Empty row for id: " ++ show k 
                     return Nothing
     ListAllKvs s    -> do
         result <- runList (listStmt $ pack . show $ s)

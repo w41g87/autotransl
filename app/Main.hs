@@ -111,6 +111,7 @@ main = Di.new $ \di -> do
                 case tr_msg of
                     -- Found linked message
                     Just tr_msg -> do
+                        info $ "Message Deleted: " ++ show msg ++ " corresponding to id: " ++ maybe "" show msg_id
                         deleteKvs ReplyStore msg
                         void $ invoke $ DeleteMessage tr_msg tr_msg
                     _ -> return ()

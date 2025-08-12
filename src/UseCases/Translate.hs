@@ -29,6 +29,7 @@ targetedTr :: (P.Member (ApiCall DetectRequest DetectResponse) r
             => Snowflake Guild
             -> Message
             -> P.Sem r (Maybe Text)
+
 targetedTr gld msg = do
     let (msg_id, ch, in_txt) = (getID @Message msg, getID @Channel msg, msg ^. #content)
     detect_token <- getKvs DetectToken gld
@@ -36,8 +37,9 @@ targetedTr gld msg = do
     lang <- getKvs @_ @_ @ISO639_1 LangStore ch
     case (trans_token, lang) of
         (Just trans_token, Just lang) -> do
-            debug $ T.concat ["Detection text is ", removeBlank . removeEmoji . removeEmote $ in_txt]
-            if T.null (removeBlank . removeEmoji . removeEmote $ in_txt)
+            let detect_txt = removeEmoji . removeEmote $ in_txt
+            debug $ T.concat ["Detection text is ", detect_txt]
+            if T.null (removeBlank detect_txt)
                 then return Nothing
                 else do
                     cacheMessage 20 ch in_txt
@@ -46,7 +48,7 @@ targetedTr gld msg = do
                     alreadyTarget <- case detect_token of
                             Just t -> do
                                 let opts = L.set (header "Authorization") ["Bearer " <> encodeUtf8 t] defaults
-                                detect "https://ws.detectlanguage.com/0.2/detect" opts (pack $ show lang) txt
+                                detect "https://ws.detectlanguage.com/0.2/detect" opts (pack $ show lang) detect_txt
                             Nothing -> return False
                     if alreadyTarget
                         then do
