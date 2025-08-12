@@ -105,6 +105,9 @@ removeBlank = mapCharList (\x -> C.isPunctuation x || C.isSpace x) (const "")
 removeEmote :: Text -> Text
 removeEmote = mapEmote (const "")
 
+removeUrl :: Text -> Text
+removeUrl = mapUrl (const "")
+
 removeIgnore :: Text -> Text
 removeIgnore msg = pack $ mapRegex (const "") "(<ignore>|</ignore>)" (unpack msg)
 
@@ -113,11 +116,15 @@ addIgnore msg =
     let f s = "<ignore>" ++ s ++ "</ignore>"
         g s = T.concat ["<ignore>", T.cons s "</ignore>"]
         igEmote = mapEmote f msg
+        igUrl = mapUrl f igEmote
     in
-        mapCharList (`T.elem` emojiList) g igEmote
+        mapCharList (`T.elem` emojiList) g igUrl
 
 mapEmote :: (String -> String) -> Text -> Text
 mapEmote f msg = pack $ mapRegex f "<:[^ :\\t<>]+:[0-9]+>" (unpack msg)
+
+mapUrl :: (String -> String) -> Text -> Text
+mapUrl f msg = pack $ mapRegex f "(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)" (unpack msg)
 
 mapCharList :: (Char -> Bool) -> (Char -> Text) -> Text -> Text
 mapCharList list f msg
