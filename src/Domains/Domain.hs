@@ -96,6 +96,9 @@ mapRegex f regex msg
                     pre
                 else pre ++ f emote ++ mapRegex f regex post
 
+removeKusa :: Text -> Text
+removeKusa = mapCharList (`T.elem` "草") (const "")
+
 removeEmoji :: Text -> Text
 removeEmoji = mapCharList (`T.elem` emojiList) (const "")
 
@@ -108,6 +111,9 @@ removeEmote = mapEmote (const "")
 removeUrl :: Text -> Text
 removeUrl = mapUrl (const "")
 
+removeW :: Text -> Text
+removeW = mapW (const "")
+
 removeIgnore :: Text -> Text
 removeIgnore msg = pack $ mapRegex (const "") "(<ignore>|</ignore>)" (unpack msg)
 
@@ -119,6 +125,9 @@ addIgnore msg =
         igUrl = mapUrl f igEmote
     in
         mapCharList (`T.elem` emojiList) g igUrl
+
+mapW :: (String -> String) -> Text -> Text
+mapW f msg = pack $ mapRegex f "w{2,}" (unpack msg)
 
 mapEmote :: (String -> String) -> Text -> Text
 mapEmote f msg = pack $ mapRegex f "<:[^ :\\t<>]+:[0-9]+>" (unpack msg)

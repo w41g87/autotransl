@@ -39,7 +39,7 @@ targetedTr gld msg = do
         (Just trans_token, Just lang) -> do
             let detect_txt = removeUrl . removeEmoji . removeEmote $ in_txt
             debug $ T.concat ["Detection text is ", detect_txt]
-            if T.null (removeBlank detect_txt)
+            if T.null (removeBlank . removeW . removeKusa $ detect_txt)
                 then return Nothing
                 else do
                     cacheMessage 20 ch in_txt
