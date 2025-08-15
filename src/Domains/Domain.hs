@@ -124,7 +124,7 @@ mapEmote :: (String -> String) -> Text -> Text
 mapEmote f msg = pack $ mapRegex f "<:[^ :\\t<>]+:[0-9]+>" (unpack msg)
 
 mapUrl :: (String -> String) -> Text -> Text
-mapUrl f msg = pack $ mapRegex f "(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)" (unpack msg)
+mapUrl f msg = pack $ mapRegex f "(http(s)?:\\/\\/)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)" (unpack msg)
 
 mapCharList :: (Char -> Bool) -> (Char -> Text) -> Text -> Text
 mapCharList list f msg
