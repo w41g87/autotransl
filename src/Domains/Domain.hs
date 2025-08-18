@@ -131,8 +131,7 @@ addIgnore msg =
     let f s = "<ignore>" ++ s ++ "</ignore>"
         g s = T.concat ["<ignore>", T.cons s "</ignore>"]
         igEmote = mapEmote f msg
-        igAt = mapAt f igEmote
-        igUrl = mapUrl f igAt
+        igUrl = mapUrl f igEmote
     in
         mapCharList (`T.elem` emojiList) g igUrl
 

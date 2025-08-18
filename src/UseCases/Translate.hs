@@ -43,7 +43,7 @@ targetedTr gld msg = do
                 then return Nothing
                 else do
                     cacheMessage 20 ch in_txt
-                    let txt = addIgnore in_txt
+                    let txt = addIgnore . removeAt $ in_txt
                     debug $ T.concat ["Formatted text is ", txt]
                     alreadyTarget <- case detect_token of
                             Just t -> do
