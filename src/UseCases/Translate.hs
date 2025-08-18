@@ -37,9 +37,9 @@ targetedTr gld msg = do
     lang <- getKvs @_ @_ @ISO639_1 LangStore ch
     case (trans_token, lang) of
         (Just trans_token, Just lang) -> do
-            let detect_txt = removeUrl . removeEmoji . removeEmote $ in_txt
+            let detect_txt = removeVanity in_txt
             debug $ T.concat ["Detection text is ", detect_txt]
-            if T.null (removeBlank . removeW . removeKusa $ detect_txt)
+            if T.null (removeNull detect_txt)
                 then return Nothing
                 else do
                     cacheMessage 20 ch in_txt
