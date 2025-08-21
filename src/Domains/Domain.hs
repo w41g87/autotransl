@@ -37,6 +37,7 @@ instance FromJSON DetectResponse where
 data TransRequest = TransRequest {
     text :: [Text],
     target_lang :: Text,
+    tag_handling :: Text, 
     ignore_tags :: [Text],
     formality :: Maybe Text, 
     context :: Maybe Text
@@ -45,7 +46,7 @@ instance ToJSON TransRequest
 instance FromJSON TransRequest
 
 instance Default TransRequest where
-    def = TransRequest [] "" ["ignore"] (Just "prefer_less") Nothing
+    def = TransRequest [] "" "xml" ["ignore"] (Just "prefer_less") Nothing
 
 data SingleTranslation = SingleTranslation {
     detected_source_language :: Text,
