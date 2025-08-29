@@ -137,7 +137,7 @@ addIgnore msg =
         mapCharList (`T.elem` emojiList) g igUrl
 
 mapW :: (String -> String) -> Text -> Text
-mapW f msg = pack $ mapRegex f "w{2,}" (unpack msg)
+mapW f msg = pack $ mapRegex f "[wW]{2,}" (unpack msg)
 
 mapEmote :: (String -> String) -> Text -> Text
 mapEmote f msg = pack $ mapRegex f "<:[^ :\n\t<>]+:[0-9]+>" (unpack msg)
@@ -146,7 +146,7 @@ mapUrl :: (String -> String) -> Text -> Text
 mapUrl f msg = pack $ mapRegex f "(http(s)?:\\/\\/)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)" (unpack msg)
 
 mapAt :: (String -> String) -> Text -> Text
-mapAt f msg = pack $ mapRegex f "@[^ \n\t]+" (unpack msg)
+mapAt f msg = pack $ mapRegex f "<@[^ \n\t<>]+>" (unpack msg)
 
 mapCharList :: (Char -> Bool) -> (Char -> Text) -> Text -> Text
 mapCharList list f msg
